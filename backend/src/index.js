@@ -19,9 +19,9 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // Database connection
-mongoose.connect(process.env.MONGO_DB_URI)
-    .then(() => console.log('MongoDB Connected'))
-    .catch((err) => console.error('MongoDB connection error:', err));
+// mongoose.connect(process.env.MONGO_DB_URI)
+//     .then(() => console.log('MongoDB Connected'))
+//     .catch((err) => console.error('MongoDB connection error:', err));
 
 // Test route
 app.get('/api/test', (req, res) => {
