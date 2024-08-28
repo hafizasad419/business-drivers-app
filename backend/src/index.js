@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors(
     {
-        origin:"https://business-drivers-frontend.vercel.app",
+        origin:"*",
         methods: ["GET", "POST", "PUT", "DELETE"],
     }
 ));
