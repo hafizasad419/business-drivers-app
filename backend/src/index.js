@@ -28,6 +28,9 @@ app.get('/api/test', (req, res) => {
     console.log('Test API is working and server is running.');
     res.status(200).json({ message: 'Backend is working!' });
 });
+app.get('/api/asad', (req, res) => {
+<a href='https://linkedin.com/in/hafizasad419' target='_blank'>Your Boy Is Here</a>
+});
 
 // Example of adding additional routes using app.route()
 app.route('/api/test')
