@@ -53,5 +53,5 @@ app.route('/api/products')
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server Chal Pya J, http://localhost:${PORT} Tay`);
 });
