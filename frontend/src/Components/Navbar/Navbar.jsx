@@ -1,52 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import MyButton from '../MyButton/MyButton';
-import mainLogo from "../../assets/Logos/main-logo.webp"
+import mainLogo from "../../assets/Logos/main-logo.webp";
+import { CiMenuBurger, CiMenuFries } from "react-icons/ci";
+import { Menu, MenuItem } from '@mui/material';
+import { motion, AnimatePresence } from 'framer-motion';
+
 function Navbar() {
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const navbarItems = [
-        {
-            id: 1,
-            title: "Home",
-            route: "/"
-        },
-        {
-            id: 2,
-            title: "Free Courses",
-            route: "/free-courses"
-        },
-        {
-            id: 3,
-            title: "Blogs",
-            route: "/blogs"
-        },
-        {
-            id: 4,
-            title: "Contact Us",
-            route: "/contact-us"
-        }
+        { id: 1, title: "Home", route: "/" },
+        { id: 2, title: "Free Courses", route: "/free-courses" },
+        { id: 3, title: "Blogs", route: "/blogs" },
+        { id: 4, title: "Contact Us", route: "/contact-us" },
     ];
 
-
-
+    const toggleMenu = () => setMenuOpen(prev => !prev);
 
     return (
-        <nav className='flex justify-around bg-darkBlue text-white
-         py-6 md:py-2 md:min-h-[16vh] items-center'>
-
-            <div className="logo w-[18vw] md:w-[8vw] p-0 m-0">
+        <nav className='flex justify-between bg-darkBlue text-white py-6 px-4 items-center md:py-2 md:px-8'>
+            {/* Logo */}
+            <div className="logo w-[18vw] md:w-[8vw]">
                 <NavLink to="/">
-                    <img className='w-full scale-150' src={mainLogo} alt="" />
+                    <img className='w-full scale-150' src={mainLogo} alt="Main Logo" />
                 </NavLink>
             </div>
 
-
-            {/* Middle of Navbar on desktop */}
-            <ul className='hidden md:flex justify-evenly'>
+            {/* Desktop Menu */}
+            <ul className='hidden md:flex justify-evenly flex-1 mx-8'>
                 {navbarItems.map((navItem) => (
-                    <li 
-                    className='mx-8 text-xl'
-                    key={navItem.id}>
+                    <li className='mx-4 text-xl' key={navItem.id}>
                         <NavLink to={navItem.route}>
                             {navItem.title}
                         </NavLink>
@@ -54,25 +38,62 @@ function Navbar() {
                 ))}
             </ul>
 
-
-            {/* Right Section of Navbar */}
+            {/* Desktop Right Section */}
             <div className='hidden md:flex'>
                 <NavLink to={"/login"}>
                     <MyButton
-                        children='Login'
-                    />
-                </NavLink>
+                        className='border-darkBlue'
 
+                    >Login</MyButton>
+                </NavLink>
                 <NavLink to={"/signup"}>
-                    <MyButton
-                        children='Signup'
-                        className='ml-4'
-                    />
+                    <MyButton className='ml-4 border-darkBlue'>Signup</MyButton>
                 </NavLink>
             </div>
 
+            {/* Mobile Menu Toggle */}
+            <div className='flex md:hidden'>
+                <button onClick={toggleMenu} aria-label="Toggle Menu">
+                    {menuOpen ? <CiMenuFries size={28} /> : <CiMenuBurger size={28} />}
+                </button>
+            </div>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {menuOpen && (
+                    <motion.div
+                        initial={{ height: 0 }}
+                        animate={{ height: "auto" }}
+                        exit={{ height: 0 }}
+                        className="absolute top-[95px] left-0 w-full bg-darkBlue text-white z-10"
+                    >
+                        <ul className='flex flex-col items-center py-4'>
+                            {navbarItems.map((navItem) => (
+                                <li className='py-2' key={navItem.id}>
+                                    <NavLink to={navItem.route} onClick={toggleMenu}>
+                                        {navItem.title}
+                                    </NavLink>
+                                </li>
+                            ))}
+                            <div className='flex flex-col items-center mt-4'>
+                                <NavLink to={"/login"} onClick={toggleMenu}>
+                                    <MyButton
+                                        className='border-darkBlue'
+                                    >Login</MyButton>
+                                </NavLink>
+                                <NavLink to={"/signup"} onClick={toggleMenu} className='mt-2'>
+                                    <MyButton
+                                        className='border-darkBlue'
+
+                                    >Signup</MyButton>
+                                </NavLink>
+                            </div>
+                        </ul>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;
