@@ -5,6 +5,8 @@ import MyButton from "./MyButton/MyButton";
 import Home from "./Home/Home";
 import TrustedFamily from "./Home/HomeMisc/TrustedFamily";
 import OurHistory from "./Home/HomeMisc/OurHistory";
+import OurMission from "./Home/HomeMisc/OurMission";
+import Benefits from "./Home/HomeMisc/Benefits";
 
 export {
     Navbar,
@@ -14,5 +16,7 @@ export {
     Home,
     TrustedFamily,
     OurHistory,
+    OurMission,
+    Benefits
 }
 

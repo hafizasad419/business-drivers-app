@@ -11,6 +11,7 @@ box-sizing: border-box;
 
 .archivo-black-regular {
     font-family: "Archivo Black", sans-serif;
+    /* font-family: 'Times New Roman', Times, serif; */
     font-weight: 400;
     font-style: normal;
   }

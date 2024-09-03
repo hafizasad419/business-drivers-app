@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import MyButton from '../MyButton/MyButton';
 import { motion } from 'framer-motion';
-import { OurHistory, TrustedFamily } from '../';
+import { OurHistory, TrustedFamily,OurMission,Benefits } from '../';
 
 // Placeholder image URL from Pexels
 const placeholderImage = 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800';
@@ -25,7 +25,7 @@ function Home() {
           </p>
           <NavLink to="/signup">
             <MyButton
-              className='hover:text-orange'
+              className='hover:text-orange py-4 text-xl md:text-2xl'
               children='Get Started' />
           </NavLink>
         </div>
@@ -45,6 +45,8 @@ function Home() {
 
       <TrustedFamily />
       <OurHistory />
+      <OurMission />
+      <Benefits/>
     </main>
   );
 }
