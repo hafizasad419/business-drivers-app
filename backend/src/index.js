@@ -7,6 +7,12 @@ import freelancerRouter from './routes/freelancerRouter.js';
 configDotenv();
 
 const app = express();
+app.use(cors({
+    origin: ['http://localhost:5173', 'https://business-drivers-frontend.vercel.app'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+}));
 
 
 const DBFunc = async () => console.log("To Avoid Over Limit Of Atlas")
@@ -26,12 +32,6 @@ connectDB().then(() => {
 
 app.use(urlencoded({ extended: true }))
 app.use(cookieParser())
-app.use(cors({
-    origin: ['http://localhost:5173', 'https://business-drivers-frontend.vercel.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-}));
 app.use(express.static("public"))
 app.use(json());
 
