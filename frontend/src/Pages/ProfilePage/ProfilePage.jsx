@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Profile from '../../utils/Profile';
 import { getCurrentUser } from '../../utils/getCurrentUser';
+import { FreelancerProfile } from '../';
 
 
 function ProfilePage() {
@@ -14,8 +14,7 @@ function ProfilePage() {
 
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6">Freelancer Profile</h1>
-      <Profile userType="Freelancer" user={freelancer} />
+      <FreelancerProfile {...freelancer} />
     </div>
   );
 }
