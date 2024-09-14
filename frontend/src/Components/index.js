@@ -17,6 +17,6 @@ export {
     TrustedFamily,
     OurHistory,
     OurMission,
-    Benefits
+    Benefits,
 }
 

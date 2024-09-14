@@ -13,7 +13,7 @@ export default {
         darkBlue: "#005C78",   // Darker teal-blue
       },
       fontFamily: {
-        sans: ['Archivo Black', 'sans-serif'],
+        sans: ['Poppins', 'sans-serif'],
       },
     
     },

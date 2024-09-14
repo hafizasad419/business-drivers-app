@@ -3,8 +3,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom"
 import { Layout, Home } from './Components'
-import { LoginPage, SignupPage } from './Pages'
-
+import { LoginPage, SignupPage, FreelancerDashboard, JobsPage, DashboardDefault } from './Pages'
+import { ProtectedRoute } from './utils'
+import { Provider } from "react-redux"
+import store from '../redux/store/store'
+import ProfilePage from './Pages/ProfilePage/ProfilePage'
 
 
 const router = createBrowserRouter(
@@ -12,12 +15,23 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-      <Route path="login" element={<LoginPage />} />
-      <Route path="signup" element={<SignupPage />} />
-     
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignupPage />} />
+
       </Route>
 
-      {/* Route without Layout */}
+      {/* Protected Routes */}
+      <Route path="/dashboard" element={
+        <ProtectedRoute>
+          <FreelancerDashboard />
+        </ProtectedRoute>
+      }>
+        {/* Nested Routes under FreelancerDashboard */}
+        <Route path="/dashboard/profile" element={<ProfilePage />} />
+        <Route path="/dashboard/jobs" element={<JobsPage />} />
+        <Route path="" element={<DashboardDefault />} /> {/* Default dashboard content */}
+      </Route>
+
     </>
   )
 )
@@ -25,6 +39,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 )

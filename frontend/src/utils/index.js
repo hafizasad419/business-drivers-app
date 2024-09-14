@@ -4,11 +4,13 @@ import InputField from "./InputField";
 import SkillDropdown from "./SkillDropdown";
 import FreelancerSignupForm from "./FreelancerSignupForm";
 import CompanySignupForm from "./CompanySignupForm.jsx";
-export{
+import ProtectedRoute from "./ProtectedRoute.jsx";
+export {
     LoginForm,
     loginFields,
     InputField,
     SkillDropdown,
     FreelancerSignupForm,
     CompanySignupForm,
+    ProtectedRoute,
 }

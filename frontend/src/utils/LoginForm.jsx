@@ -1,17 +1,81 @@
+import { useDispatch } from 'react-redux';
 // LoginForm.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import InputField from './InputField';
-import { loginFields } from './formFields'; // Assuming the fields are exported from 'formFields.js'
+import { loginFields } from './formFields';
 import { MyButton } from '../Components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { loginSuccess } from '../../redux/slices/authSlice.js';
 
+
+  
 function LoginForm() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-const onSubmitHandler = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-};
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
 
+    // Handle input changes
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const onSubmitHandler = async (e) => {
+        e.preventDefault();
+
+        // Check if both email and password fields are filled
+        console.log('Form Data:', formData.email, formData.password); // Debug log
+        if (!formData.email || !formData.password) {
+            setErrorMessage('Please Enter Both, Email and Password.');
+            return;
+        }
+
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/freelancer/login`,
+                {
+                    email: formData.email,
+                    password: formData.password,
+                },
+                {
+                    withCredentials: true, // Ensure cookies are handled properly
+                }
+            );
+            console.log(response);
+
+
+            if (response.status === 200 && response.data.success) {
+                console.log("Login successful!", response.data);
+            
+                // Save user data to localStorage and cookies
+                localStorage.setItem('user', JSON.stringify(response.data));
+                Cookies.set('user', JSON.stringify(response.data), { expires: 7 });
+            
+                // Update global state
+                dispatch(loginSuccess(response.data));
+            
+                // Redirect to dashboard
+                navigate("/dashboard");
+            }
+            
+
+        } catch (err) {
+            console.log(err.message);
+            console.error('Login failed:', err?.message || 'Something went wrong.');
+            setErrorMessage(err?.message || 'Failed to log in. Please try again.');
+        }
+    };
+  
 
     return (
         <div className="flex items-center justify-center min-h-screen">
@@ -20,6 +84,7 @@ const onSubmitHandler = (e) => {
                 <p className="text-center text-gray-600 mb-8">
                     Find top talent or get your work done seamlessly.
                 </p>
+                {errorMessage && <p className="text-red-500 text-center mb-4">{errorMessage}</p>}
                 <form onSubmit={onSubmitHandler}>
                     {loginFields.map((field) => (
                         <InputField
@@ -32,7 +97,9 @@ const onSubmitHandler = (e) => {
                             autoComplete={field.autoComplete}
                             isRequired={field.isRequired}
                             placeholder={field.placeholder}
-                            className="rounded-full mb-4 w-full p-3 border border-gray-300" // Ensure spacing and styling
+                            className="rounded-full mb-4 w-full p-3 border border-gray-300"
+                            value={formData[field.name]} // Bind the value to formData
+                            onChange={handleInputChange} // Bind the onChange handler
                         />
                     ))}
                     <div className="mb-6">
@@ -45,7 +112,7 @@ const onSubmitHandler = (e) => {
                         <MyButton
                             type="submit"
                             textColor=""
-                            className="w-full py-3 text-2xl rounded-full text-white  hover:text-orange"
+                            className="w-full py-3 text-2xl rounded-full text-white hover:text-orange"
                         >
                             Login
                         </MyButton>

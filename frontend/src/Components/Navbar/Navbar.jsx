@@ -39,7 +39,7 @@ function Navbar() {
             </ul>
 
             {/* Desktop Right Section */}
-            <div className='hidden md:flex'>
+            <div className='hidden md:flex font-bold'>
                 <NavLink to={"/login"}>
                     <MyButton
                         className='border-darkBlue'

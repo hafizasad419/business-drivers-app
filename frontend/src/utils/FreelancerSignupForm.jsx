@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import SkillDropdown from './SkillDropdown';
 import { MyButton } from '../Components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 function FreelancerSignupForm() {
+
+
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
+        password: '',
         number: '',
         cnic: '',
         skill: '',
@@ -15,31 +21,64 @@ function FreelancerSignupForm() {
         bankAccount: '',
         currentlyDoingJob: '',
         companyName: '',
-        agree: false
+        agree: false,
+        avatar: null, // New field for Avatar
+        bio: '', // New field for Bio
     });
 
     const handleChange = (e) => {
         const { name, value, type, checked, files } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value
+            [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission
+
+        // FormData to handle file uploads
+        const formDataToSend = new FormData();
+        formDataToSend.append('fullName', formData.fullName);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('password', formData.password);
+        formDataToSend.append('number', formData.number);
+        formDataToSend.append('CNIC', formData.cnic);
+        formDataToSend.append('skills', formData.skill);
+        formDataToSend.append('bankAccount', formData.bankAccount);
+        formDataToSend.append('currentlyEmployed', formData.currentlyDoingJob === 'yes');
+        formDataToSend.append('companyName', formData.companyName);
+        formDataToSend.append('proofOfRegistrationFee', formData.proofOfRegistration);
+        formDataToSend.append('avatar', formData.avatar); // Append avatar file
+        formDataToSend.append('bio', formData.bio); // Append bio
+
+        try {
+            const response = await axios.post(`
+                ${import.meta.env.VITE_API_URL}/freelancer/register`, formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            console.log(response.data);
+            navigate("/login")
+        } catch (error) {
+            console.error('Failed to register:', error);
+            // Handle error response (e.g., show error message)
+        }
     };
 
     return (
-        <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="flex items-center justify-center min-h-screen text-orange p-4">
+        <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center justify-center min-h-screen text-orange p-4"
+        >
             <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg">
-                <h2 className="text-4xl font-bold mb-8   text-center">Freelancer Signup</h2>
+                <h2 className="text-4xl font-bold mb-8 text-center">Freelancer Signup</h2>
                 <form onSubmit={handleSubmit}>
+                    {/* Existing input fields */}
                     <div className="mb-4">
                         <label htmlFor="fullName" className="block text-gray-700 text-sm font-bold mb-2">
                             Full Name
@@ -51,7 +90,7 @@ function FreelancerSignupForm() {
                             value={formData.fullName}
                             onChange={handleChange}
                             placeholder="Full Name"
-                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange "
+                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
                             required
                         />
                     </div>
@@ -67,14 +106,29 @@ function FreelancerSignupForm() {
                             value={formData.email}
                             onChange={handleChange}
                             placeholder="Email Address"
-                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange "
+                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            placeholder="Password"
+                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
                             required
                         />
                     </div>
 
                     <div className="mb-4">
                         <label htmlFor="number" className="block text-gray-700 text-sm font-bold mb-2">
-                            Number
+                            Phone Number
                         </label>
                         <input
                             type="text"
@@ -83,7 +137,7 @@ function FreelancerSignupForm() {
                             value={formData.number}
                             onChange={handleChange}
                             placeholder="Phone Number"
-                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange "
+                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
                             required
                         />
                     </div>
@@ -99,7 +153,7 @@ function FreelancerSignupForm() {
                             value={formData.cnic}
                             onChange={handleChange}
                             placeholder="CNIC Number"
-                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange "
+                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
                             required
                         />
                     </div>
@@ -120,9 +174,39 @@ function FreelancerSignupForm() {
                             id="proofOfRegistration"
                             name="proofOfRegistration"
                             onChange={handleChange}
-                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange "
+                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
                             required
                         />
+                    </div>
+
+                    {/* New Avatar Field */}
+                    <div className="mb-4">
+                        <label htmlFor="avatar" className="block text-gray-700 text-sm font-bold mb-2">
+                            Avatar
+                        </label>
+                        <input
+                            type="file"
+                            id="avatar"
+                            name="avatar"
+                            onChange={handleChange}
+                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
+                        />
+                    </div>
+
+                    {/* New Bio Field */}
+                    <div className="mb-4">
+                        <label htmlFor="bio" className="block text-gray-700 text-sm font-bold mb-2">
+                            Bio
+                        </label>
+                        <textarea
+                            id="bio"
+                            name="bio"
+                            value={formData.bio}
+                            onChange={handleChange}
+                            placeholder="Tell companies about yourself"
+                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
+                            required
+                        ></textarea>
                     </div>
 
                     <div className="mb-4">
@@ -136,7 +220,7 @@ function FreelancerSignupForm() {
                             value={formData.bankAccount}
                             onChange={handleChange}
                             placeholder="Bank Account Number"
-                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange "
+                            className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
                             required
                         />
                     </div>
@@ -151,7 +235,7 @@ function FreelancerSignupForm() {
                                 value="yes"
                                 checked={formData.currentlyDoingJob === 'yes'}
                                 onChange={handleChange}
-                                className="form-radio  "
+                                className="form-radio"
                                 required
                             />
                             <label htmlFor="currentlyDoingJobYes" className="ml-2 text-sm text-gray-600">Yes</label>
@@ -164,7 +248,7 @@ function FreelancerSignupForm() {
                                 value="no"
                                 checked={formData.currentlyDoingJob === 'no'}
                                 onChange={handleChange}
-                                className="form-radio  "
+                                className="form-radio"
                                 required
                             />
                             <label htmlFor="currentlyDoingJobNo" className="ml-2 text-sm text-gray-600">No</label>
@@ -182,45 +266,39 @@ function FreelancerSignupForm() {
                                     value={formData.companyName}
                                     onChange={handleChange}
                                     placeholder="Company Name"
-                                    className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange "
+                                    className="w-full p-3 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange"
+                                    required
                                 />
                             </div>
                         )}
                     </div>
 
-                    <div className="mb-6">
-                        <label className="inline-flex items-center">
+                    <div className="mb-4">
+                        <label htmlFor="agree" className="inline-flex items-center">
                             <input
                                 type="checkbox"
                                 id="agree"
                                 name="agree"
                                 checked={formData.agree}
                                 onChange={handleChange}
-                                className="form-checkbox  "
+                                className="form-checkbox"
                                 required
                             />
                             <span className="ml-2 text-sm text-gray-600">I agree that all information is correct</span>
                         </label>
                     </div>
 
-                    <div className="flex justify-center">
+                    <div className="flex justify-center my-4 ">
                         <MyButton
-                            type="submit"
-                            textColor=""
-                            className="w-full py-3 text-lg rounded-full bg-orange text-white hover:text-orange"
-                        >
-                            Sign Up
-                        </MyButton>
+                            className='hover:text-orange'
+                            children='Signup'
+                            type="submit" />
                     </div>
                 </form>
-                <div className="mt-6 text-center">
-                    <p className="text-darkBlue">
-                        Already have an account?{' '}
-                        <NavLink to="/login" className="  font-bold">
-                            <span className='text-orange hover:underline'>Login</span>
-                        </NavLink>
-                    </p>
-                </div>
+
+                <p className="mt-4 text-center text-gray-600">
+                    Already have an account? <NavLink to="/login" className="text-orange">Login</NavLink>
+                </p>
             </div>
         </motion.div>
     );
