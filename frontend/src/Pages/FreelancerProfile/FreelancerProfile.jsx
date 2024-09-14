@@ -13,7 +13,7 @@ export default function FreelancerProfile({
   bio = "Passionate freelancer with 5+ years of experience in web development."
 }) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto">
+    <div className="bg-gray-200 px-6 py-12 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
         <img
           alt={fullName}
