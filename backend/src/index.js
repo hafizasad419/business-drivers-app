@@ -8,17 +8,16 @@ configDotenv();
 
 const app = express();
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://business-drivers-frontend.vercel.app'],
+    origin: ['http://localhost:5173', 'http://192.168.1.107:5173', 'https://business-drivers-frontend.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
 }));
 
-
 const DBFunc = async () => console.log("To Avoid Over Limit Of Atlas")
-// connectDB()
+// DBFunc()
 connectDB().then(() => {
-    app.listen(process.env.PORT, () => {
+    app.listen(process.env.PORT, '192.168.1.107', () => {
         console.log(`Server Chal Pya J, http://localhost:${process.env.PORT} Tay`);
 
     })

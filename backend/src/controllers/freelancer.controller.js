@@ -136,6 +136,48 @@ const loginFreelancer = async (req, res) => {
 
 }
 
+const logoutFreelancer = async (req, res) => {
+    try {
+        // Extract refreshToken from cookies
+        const { id } = req.body;
+
+        // If there's no refreshToken in the cookies, send an error response
+        if (!id) {
+            return res.status(400).json(new apiError(400, "Id not found in request body."));
+        }
+
+        // Find the freelancer by refreshToken
+        const freelancer = await Freelancer.findById(id)
+
+        // If freelancer not found, send error response
+        if (!freelancer) {
+            return res.status(404).json(new apiError(404, "Freelancer not found"));
+        }
+
+        // Remove the refreshToken from the database
+        freelancer.refreshToken = null;
+        await freelancer.save();
+
+        // Clear accessToken and refreshToken cookies
+        const cookiesOptions = {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            expires: new Date(0) // Expire immediately to clear cookies
+        };
+
+        return res
+            .status(200)
+            .cookie("accessToken", "", cookiesOptions)
+            .cookie("refreshToken", "", cookiesOptions)
+            .json(new apiResponse(200, null, "Freelancer Successfully Logged Out."));
+    } catch (error) {
+        return res.status(500).json(new apiError(500, "Server error during logout"));
+    }
+};
 
 
-export { registerFreelancer, loginFreelancer };
+
+
+
+export { registerFreelancer, loginFreelancer, logoutFreelancer };

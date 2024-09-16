@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import MyButton from '../MyButton/MyButton';
 import mainLogo from "../../assets/Logos/main-logo.webp";
 import { CiMenuBurger, CiMenuFries } from "react-icons/ci";
-import { Menu, MenuItem } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function Navbar() {
@@ -21,9 +20,9 @@ function Navbar() {
     return (
         <nav className='flex justify-between bg-darkBlue text-white py-6 px-4 items-center md:py-2 md:px-8'>
             {/* Logo */}
-            <div className="logo w-[18vw] md:w-[8vw]">
+            <div className="logo w-[18vw] md:w-[6vw]">
                 <NavLink to="/">
-                    <img className='w-full scale-150' src={mainLogo} alt="Main Logo" />
+                    <img className='w-full' src={mainLogo} alt="Main Logo" />
                 </NavLink>
             </div>
 

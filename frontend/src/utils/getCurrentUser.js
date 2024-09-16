@@ -3,7 +3,7 @@ export const getCurrentUser = () => {
     let userObject;
     if (userString) {
         userObject = JSON.parse(userString);
-        console.log(userObject);
+        // console.log(userObject);
     } else {
         console.log('No user found in localStorage');
     }
