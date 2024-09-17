@@ -126,7 +126,7 @@ function CompanySignupForm() {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_API_URL}/company/register`, formDataToSend, {
+                `${import.meta.env.BACKEND_API_URL}/company/register`, formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

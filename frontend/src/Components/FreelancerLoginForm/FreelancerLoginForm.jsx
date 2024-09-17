@@ -40,7 +40,7 @@ function FreelancerLoginForm() {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_API_URL}/freelancer/login`,
+                `${import.meta.env.BACKEND_API_URL}/freelancer/login`,
                 {
                     email: formData.email,
                     password: formData.password,

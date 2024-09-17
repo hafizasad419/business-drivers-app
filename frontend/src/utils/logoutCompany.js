@@ -13,7 +13,7 @@ export const useLogout = () => {
         try {
             // Call backend to clear cookies
             await axios
-                .post(`${import.meta.env.VITE_API_URL}/company/logout`, {id}, { withCredentials: true });
+                .post(`${import.meta.env.BACKEND_API_URL}/company/logout`, {id}, { withCredentials: true });
             navigate('/login');
 
 

@@ -40,7 +40,7 @@ function CompanyLoginForm() {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_API_URL}/company/login`,
+                `${import.meta.env.BACKEND_API_URL}/company/login`,
                 {
                     email: formData.email,
                     password: formData.password,
