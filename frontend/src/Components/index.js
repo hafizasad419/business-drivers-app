@@ -7,6 +7,12 @@ import TrustedFamily from "./Home/HomeMisc/TrustedFamily";
 import OurHistory from "./Home/HomeMisc/OurHistory";
 import OurMission from "./Home/HomeMisc/OurMission";
 import Benefits from "./Home/HomeMisc/Benefits";
+import FreelancerLoginForm from "./FreelancerLoginForm/FreelancerLoginForm";
+import FreelancerSignupForm from "./FreelancerSignupForm/FreelancerSignupForm";
+import CompanyLoginForm from "./CompanyLoginForm/CompanyLoginForm";
+import CompanySignupForm from "./CompanySignupForm/CompanySignupForm";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.jsx";
+import FreelancerProfile from "../Components/FreelancerProfile/FreelancerProfile.jsx";
 
 export {
     Navbar,
@@ -18,5 +24,11 @@ export {
     OurHistory,
     OurMission,
     Benefits,
+    FreelancerLoginForm,
+    FreelancerSignupForm,
+    CompanyLoginForm,
+    CompanySignupForm,
+    ProtectedRoute,
+    FreelancerProfile,
 }
 

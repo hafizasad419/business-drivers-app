@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getCurrentUser } from '../../utils/getCurrentUser';
-import { FreelancerProfile } from '../';
+import { FreelancerProfile } from '../../Components';
 
 
-function ProfilePage() {
+function FreelancerProfilePage() {
 
   let stateData = useSelector(state => state.auth)
   if (!stateData) {
@@ -19,4 +19,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage;
+export default FreelancerProfilePage;

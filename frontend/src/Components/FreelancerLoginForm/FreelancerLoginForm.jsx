@@ -1,18 +1,16 @@
-import { useDispatch } from 'react-redux';
-// LoginForm.jsx
+// FreelancerLoginForm.jsx
 import React, { useEffect, useState } from 'react';
-import InputField from './InputField';
-import { loginFields } from './formFields';
-import { MyButton } from '../Components';
+import InputField from '../../utils/InputField.jsx';
+import { loginFields } from '../../utils/formFields.js';
+import { MyButton } from '../index.js';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { loginSuccess } from '../../redux/slices/authSlice.js';
 
 
   
-function LoginForm() {
-    const dispatch = useDispatch();
+function FreelancerLoginForm() {
+ 
     const navigate = useNavigate();
 
     const [errorMessage, setErrorMessage] = useState(null);
@@ -61,11 +59,10 @@ function LoginForm() {
                 localStorage.setItem('user', JSON.stringify(response.data));
                 Cookies.set('user', JSON.stringify(response.data), { expires: 7 });
             
-                // Update global state
-                dispatch(loginSuccess(response.data));
+           
             
                 // Redirect to dashboard
-                navigate("/dashboard");
+                navigate("/freelancer-dashboard");
             }
             
 
@@ -131,4 +128,4 @@ function LoginForm() {
     );
 }
 
-export default LoginForm;
+export default FreelancerLoginForm;

@@ -1,7 +1,7 @@
 import React from 'react'
 import { getCurrentUser } from '../../utils/getCurrentUser'
 
-function DashboardDefault() {
+function FreelancerDashboardDefault() {
 
     const freelancer = getCurrentUser()
 
@@ -12,4 +12,4 @@ function DashboardDefault() {
     )
 }
 
-export default DashboardDefault
+export default FreelancerDashboardDefault

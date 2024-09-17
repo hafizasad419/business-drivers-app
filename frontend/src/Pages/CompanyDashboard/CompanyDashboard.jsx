@@ -1,19 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaBriefcase, FaUser, FaSignOutAlt, FaChevronDown } from 'react-icons/fa'
+import { FaBriefcase, FaUser, FaSignOutAlt, FaChevronDown, FaPlusCircle, FaUsers } from 'react-icons/fa'
 import { RiMessage2Line } from 'react-icons/ri'
-import { getCurrentUser } from '../../utils/getCurrentUser'
-import { useLogout } from '../../utils/logoutFreelancer'
+import { getCurrentCompany } from '../../utils/getCurrentCompany'
+import { useLogout } from '../../utils/logoutCompany.js'
 import mainLogo from "../../assets/Logos/main-logo.webp";
-
 
 const Header = () => {
   const { handleLogout } = useLogout();
-
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef(null)
-  const freelancer = getCurrentUser()
+  const company = getCurrentCompany()
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -30,11 +28,8 @@ const Header = () => {
   return (
     <header className="bg-lightBlue text-white px-8 py-2">
       <div className="flex flex-row justify-between items-center">
-        {/* Logo */}
         <div className="logo w-[18vw] md:w-[8vw]">
-
           <img className='w-full scale-150' src={mainLogo} alt="Main Logo" />
-
         </div>
         <nav className="flex items-center space-x-4">
           <button className="flex items-center space-x-2 text-white">
@@ -47,11 +42,11 @@ const Header = () => {
               onClick={() => setIsOpen(!isOpen)}
             >
               <img
-                src={freelancer?.avatar || "/placeholder.svg?height=32&width=32"}
-                alt="Your Avatar"
+                src={company?.avatar || "/placeholder.svg?height=32&width=32"}
+                alt="Company Avatar"
                 className="w-8 h-8 rounded-full mr-2"
               />
-              <span className="hidden sm:inline">{freelancer?.fullName || "Your Account"}</span>
+              <span className="hidden sm:inline">{company?.companyName || "Your Company"}</span>
               <FaChevronDown className="w-4 h-4 ml-2" />
             </button>
             <AnimatePresence>
@@ -64,7 +59,7 @@ const Header = () => {
                   className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                 >
                   <NavLink
-                    to="/freelancer-dashboard/profile"
+                    to="/company-dashboard/profile"
                     className={({ isActive }) =>
                       `${isActive ? 'bg-orange text-white' : 'text-gray-900 hover:bg-orange hover:text-white'
                       } flex w-full items-center px-4 py-2 text-sm transition-colors duration-200`
@@ -72,7 +67,7 @@ const Header = () => {
                     onClick={() => setIsOpen(false)}
                   >
                     <FaUser className="w-5 h-5 mr-2" />
-                    Profile
+                    Company Profile
                   </NavLink>
                   <button
                     className="text-gray-900 hover:bg-orange hover:text-white flex w-full items-center px-4 py-2 text-sm transition-colors duration-200"
@@ -112,17 +107,17 @@ const SidebarItem = ({ to, icon: Icon, children, exact = false }) => {
 }
 
 const Sidebar = () => {
-  const isMobile = window.innerWidth < 640 // Adjust this breakpoint as needed
+  const isMobile = window.innerWidth < 640
   const { handleLogout } = useLogout();
 
-
   return (
-    <nav className="flex flex-row sm:flex-col space-x-2 sm:space-x-0 sm:space-y-2 p-4 sm:p-8 overflow-x-auto sm:overflow-x-visible">
-      <SidebarItem to="/freelancer-dashboard" icon={FaBriefcase} exact={true}>Dashboard</SidebarItem>
-      <SidebarItem to="/freelancer-dashboard/jobs" icon={FaBriefcase}>Jobs</SidebarItem>
+    <nav className="flex flex-row flex-wrap sm:flex-col space-x-2 sm:space-x-0 sm:space-y-2 p-4 sm:p-8 overflow-x-auto sm:overflow-x-visible">
+      <SidebarItem to="/company-dashboard" icon={FaBriefcase} exact={true}>Dashboard</SidebarItem>
+      <SidebarItem to="/company-dashboard/post-job" icon={FaPlusCircle}>Post a Job</SidebarItem>
+      <SidebarItem to="/company-dashboard/jobs-posted" icon={FaUsers}>Jobs Posted</SidebarItem>
       {!isMobile && (
         <>
-          <SidebarItem to="/freelancer-dashboard/profile" icon={FaUser}>My Profile</SidebarItem>
+          <SidebarItem to="/company-dashboard/profile" icon={FaUser}>Company Profile</SidebarItem>
           <button
             onClick={() => { handleLogout() }}
             className="flex items-center px-4 py-2 rounded-md text-[#D0021B] hover:bg-[#D0021B] hover:text-white transition-colors duration-200 ease-in-out">
@@ -135,7 +130,7 @@ const Sidebar = () => {
   )
 }
 
-export default function FreelancerDashboard() {
+const CompanyDashboard = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -168,3 +163,5 @@ export default function FreelancerDashboard() {
     </div>
   )
 }
+
+export default CompanyDashboard

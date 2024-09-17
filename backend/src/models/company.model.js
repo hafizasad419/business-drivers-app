@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt'; // For password hashing
+import bcrypt from 'bcryptjs'; // For password hashing
 import jwt from 'jsonwebtoken'; // For JWT token creation
 
 const companySchema = new mongoose.Schema({
@@ -10,7 +10,7 @@ const companySchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   proofOfRegistrationFee: { type: String, required: true }, 
-  avatarURL: { type: String }, // Cloudinary URL for profile picture
+  avatar: { type: String }, // Cloudinary URL for profile picture
   bio: { type: String }, // Bio of the Company
   refreshToken: { type: String,}
   // URL or file path for proof of registration
@@ -23,9 +23,17 @@ companySchema.methods.comparePassword = async function (enteredPassword) {
 };
 
 // Instance method to generate JWT token
-companySchema.methods.generateAuthToken = function () {
-  return jwt.sign({ id: this._id, email: this.email }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '1h', // Expiration time for the token
+companySchema.methods.generateAccessToken = function () {
+  const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRY || '1d';
+  return jwt.sign({ id: this._id, email: this.email }, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: accessTokenExpiry,
+  });
+};
+
+companySchema.methods.generateRefreshToken = function () {
+  const refreshTokenExpiry = process.env.REFRESH_TOKEN_EXPIRY || '10d';
+  return jwt.sign({ _id: this._id }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: refreshTokenExpiry,
   });
 };
 

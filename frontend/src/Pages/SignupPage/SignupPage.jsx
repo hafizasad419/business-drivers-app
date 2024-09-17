@@ -1,6 +1,6 @@
 // SignupPage.jsx
 import React from 'react';
-import {CompanySignupForm, FreelancerSignupForm} from '../../utils';
+import {CompanySignupForm, FreelancerSignupForm} from '../../Components';
 import { motion } from 'framer-motion';
 import { MyButton } from '../../Components';
 

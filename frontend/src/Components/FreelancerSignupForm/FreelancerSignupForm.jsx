@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import SkillDropdown from './SkillDropdown';
-import { MyButton } from '../Components';
+import SkillDropdown from '../../utils/SkillDropdown';
+import { MyButton } from '..';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import axios from 'axios';

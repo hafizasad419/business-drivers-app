@@ -5,7 +5,7 @@ import {upload} from "../utils/multer.js"
 
 const freelancerRouter = Router()
 
-freelancerRouter.get("", async (req, res) => {
+freelancerRouter.get("/", async (req, res) => {
     const hostName = req.hostname
     res.status(200).json(new apiResponse(200, {
         hostName,
