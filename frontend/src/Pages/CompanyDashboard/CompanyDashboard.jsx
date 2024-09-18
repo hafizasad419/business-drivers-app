@@ -26,7 +26,8 @@ const Header = () => {
   }, [])
 
   return (
-    <header className="bg-lightBlue text-white px-8 py-2">
+    <motion.header
+    className="bg-lightBlue text-white px-8 py-2">
       <div className="flex flex-row justify-between items-center">
         <div className="logo w-[18vw] md:w-[8vw]">
           <img className='w-full scale-150' src={mainLogo} alt="Main Logo" />
@@ -85,7 +86,7 @@ const Header = () => {
           </div>
         </nav>
       </div>
-    </header>
+    </motion.header>
   )
 }
 
@@ -137,10 +138,9 @@ const CompanyDashboard = () => {
       <div className="flex flex-col sm:flex-row">
         <AnimatePresence>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
             className="sm:w-64"
           >
             <Sidebar />

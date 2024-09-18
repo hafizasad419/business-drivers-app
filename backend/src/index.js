@@ -5,6 +5,7 @@ import connectDB from './db/db.js';
 import cookieParser from "cookie-parser"
 import freelancerRouter from './routes/freelancerRouter.js';
 import companyRouter from './routes/companyRouter.js';
+import jobsRouter from './routes/jobsRouter.js';
 configDotenv();
 
 const app = express();
@@ -43,5 +44,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/freelancer", freelancerRouter)
 app.use("/api/v1/company", companyRouter)
+app.use("/api/v1/jobs", jobsRouter)
 
 

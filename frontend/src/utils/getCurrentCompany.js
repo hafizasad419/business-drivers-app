@@ -8,5 +8,6 @@ export const getCurrentCompany = () => {
         console.log('No company found in localStorage');
     }
     const company = companyObject.data.company
+    
     return company;
 } 

@@ -13,6 +13,9 @@ import CompanyLoginForm from "./CompanyLoginForm/CompanyLoginForm";
 import CompanySignupForm from "./CompanySignupForm/CompanySignupForm";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.jsx";
 import FreelancerProfile from "../Components/FreelancerProfile/FreelancerProfile.jsx";
+import CompanyProfile from "./CompanyProfile/CompanyProfile.jsx";
+import PostJob from "./PostJob/PostJob.jsx";
+import Job from "./Job/Job.jsx";
 
 export {
     Navbar,
@@ -30,5 +33,8 @@ export {
     CompanySignupForm,
     ProtectedRoute,
     FreelancerProfile,
+    CompanyProfile,
+    PostJob,
+    Job
 }
 
