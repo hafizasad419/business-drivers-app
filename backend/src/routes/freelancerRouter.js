@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { apiResponse } from "../utils/apiResponse.js";
-import { loginFreelancer, logoutFreelancer, registerFreelancer } from "../controllers/freelancer.controller.js";
+import { getFreelancerProfile, loginFreelancer, logoutFreelancer, registerFreelancer } from "../controllers/freelancer.controller.js";
 import {upload} from "../utils/multer.js"
 
 const freelancerRouter = Router()
@@ -26,6 +26,7 @@ freelancerRouter.post("/register", upload.fields([
 
 freelancerRouter.post("/login", loginFreelancer)
 freelancerRouter.post("/logout", logoutFreelancer)
+freelancerRouter.post("/profile", getFreelancerProfile)
 
 
 

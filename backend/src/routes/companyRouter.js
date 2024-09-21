@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { apiResponse } from "../utils/apiResponse.js";
-import { loginCompany, logoutCompany, registerCompany } from "../controllers/company.controller.js";
+import { getCompanyProfile, loginCompany, logoutCompany, registerCompany } from "../controllers/company.controller.js";
 import { upload } from "../utils/multer.js"; // Assuming you have multer configured similarly for file uploads
 
 const companyRouter = Router();
@@ -30,5 +30,6 @@ companyRouter.post("/login", loginCompany);
 
 // Route to handle company logout
 companyRouter.post("/logout", logoutCompany);
+companyRouter.post("/profile", getCompanyProfile);
 
 export default companyRouter;

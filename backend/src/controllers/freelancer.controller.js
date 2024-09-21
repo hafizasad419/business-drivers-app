@@ -136,6 +136,23 @@ const loginFreelancer = async (req, res) => {
 
 }
 
+
+const getFreelancerProfile = async (req, res) => {
+    const { id } = req.body;s
+
+    try {
+        const freelancer = await Freelancer.findById(id).select("-password -refreshToken");
+
+        if (!freelancer) {
+            return res.status(404).json(new apiError(404, "Freelancer not found"));
+        }
+
+        return res.status(200).json(new apiResponse(200, freelancer, "Freelancer profile retrieved successfully"));
+    } catch (error) {
+        return res.status(500).json(new apiError(500, "Server error while retrieving freelancer profile"));
+    }
+};
+
 const logoutFreelancer = async (req, res) => {
     try {
         // Extract refreshToken from cookies
@@ -180,4 +197,4 @@ const logoutFreelancer = async (req, res) => {
 
 
 
-export { registerFreelancer, loginFreelancer, logoutFreelancer };
+export { registerFreelancer, loginFreelancer, logoutFreelancer, getFreelancerProfile };

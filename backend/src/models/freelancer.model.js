@@ -15,7 +15,11 @@ const freelancerSchema = new mongoose.Schema({
   proofOfRegistrationFee: { type: String, required: true }, // File path or URL for proof
   avatar: { type: String, required: true }, // Cloudinary URL for profile picture
   bio: { type: String }, // Bio of the freelancer
-  refreshToken: { type: String, }
+  refreshToken: { type: String, },
+  applications: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Application' // New field referencing the Application model
+  }]
 }, { timestamps: true });
 
 // Add custom methods

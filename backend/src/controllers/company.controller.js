@@ -113,6 +113,22 @@ const loginCompany = async (req, res) => {
         }, "Company successfully logged in."));
 };
 
+// Company Profile
+const getCompanyProfile = async (req, res) => {
+    const { id } = req.body;
+
+    if (!id) {
+        return res.status(400).json(new apiError(400, "Id not found in request body."));
+    }
+
+    const company = await Company.findById(id).select("-password -refreshToken");
+    if (!company) {
+        return res.status(404).json(new apiError(404, "Company not found."));
+    }
+
+    return res.status(200).json(new apiResponse(200, company, "Company profile fetched successfully."));
+};
+
 // Logout Company
 const logoutCompany = async (req, res) => {
     try {
@@ -146,4 +162,4 @@ const logoutCompany = async (req, res) => {
     }
 };
 
-export { registerCompany, loginCompany, logoutCompany };
+export { registerCompany, loginCompany, logoutCompany, getCompanyProfile };

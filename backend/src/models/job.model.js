@@ -49,21 +49,7 @@ const jobSchema = new mongoose.Schema({
         ref: 'Company', // Assuming there's a 'Company' model
         required: true
     },
-    freelancersApplied: [{
-        freelancer: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Freelancer' // Assuming there's a 'Freelancer' model
-        },
-        proposal: {
-            type: String,
-            trim: true
-        },
-        status: {
-            type: String,
-            enum: ['applied', 'interview', 'hired', 'rejected'],
-            default: 'applied'
-        }
-    }],
+
     status: {
         type: String,
         enum: ['open', 'closed', 'hiring', 'completed'],

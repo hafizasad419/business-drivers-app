@@ -1,10 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, ChevronUp, DollarSign, Clock, Users, Briefcase, Star } from 'lucide-react'
+import { ChevronDown, ChevronUp, DollarSign, Clock, Users, Briefcase, Star, Building } from 'lucide-react'
+import { getCompanyProfile } from '../../apis'
 
-
-const Job = ({ job }) => {
+const Job = React.memo(({ job, handleApply, disabled }) => {
+    const [companyName, setCompanyName] = useState("")
     const [isExpanded, setIsExpanded] = useState(false)
+
+    useEffect(() => {
+        const fetchCompanyProfile = async () => {
+            if (job.postedBy) {
+                try {
+                    const companyData = await getCompanyProfile(job.postedBy)
+                    setCompanyName(companyData.data.companyName)
+                } catch (error) {
+                    console.error("Error fetching company profile:", error)
+                    setCompanyName("Unknown Company")
+                }
+            }
+        }
+
+        fetchCompanyProfile()
+    }, [job.postedBy])
 
     const toggleExpand = () => setIsExpanded(!isExpanded)
 
@@ -28,6 +45,12 @@ const Job = ({ job }) => {
                     <span className="mr-4"><DollarSign className="inline w-4 h-4 mr-1" />{job.budget}</span>
                     <span className="mr-4"><Clock className="inline w-4 h-4 mr-1" />{job.duration}</span>
                     <span><Users className="inline w-4 h-4 mr-1" />{job.numberOfFreelancers} needed</span>
+                </div>
+                <div className="mt-2 text-gray-600">
+                    <span className="mr-4">
+                        <Building className="inline w-4 h-4 mr-1" />
+                        {companyName}
+                    </span>
                 </div>
             </div>
 
@@ -73,8 +96,12 @@ const Job = ({ job }) => {
                             </div>
 
                             <div className="flex justify-end">
-                                <button className="bg-orange text-white px-4 py-2 rounded-md hover:bg-darkBlue transition-colors duration-200">
-                                    Apply Now
+                                <button
+                                    disabled={disabled}
+                                    onClick={() => handleApply(job)}
+                                    className={`bg-orange text-white px-4 py-2 rounded-md hover:bg-darkBlue transition-colors duration-200 ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-darkBlue'}`}
+                                >
+                                 {disabled ? 'Already Applied' : 'Apply Now'}
                                 </button>
                             </div>
                         </div>
@@ -83,6 +110,6 @@ const Job = ({ job }) => {
             </AnimatePresence>
         </div>
     )
-}
+})
 
-export default Job  
+export default Job

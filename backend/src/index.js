@@ -6,12 +6,13 @@ import cookieParser from "cookie-parser"
 import freelancerRouter from './routes/freelancerRouter.js';
 import companyRouter from './routes/companyRouter.js';
 import jobsRouter from './routes/jobsRouter.js';
+import applicationRouter from './routes/applicationRouter.js';
 configDotenv();
 
 const app = express();
 app.use(cors({
     origin: ['http://localhost:5173', 'http://192.168.1.107:5173', 'https://business-drivers-frontend.vercel.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
 }));
@@ -45,5 +46,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/freelancer", freelancerRouter)
 app.use("/api/v1/company", companyRouter)
 app.use("/api/v1/jobs", jobsRouter)
+app.use("/api/v1/application", applicationRouter)
+
 
 

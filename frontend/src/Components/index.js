@@ -16,6 +16,10 @@ import FreelancerProfile from "../Components/FreelancerProfile/FreelancerProfile
 import CompanyProfile from "./CompanyProfile/CompanyProfile.jsx";
 import PostJob from "./PostJob/PostJob.jsx";
 import Job from "./Job/Job.jsx";
+import ClientPostedJob from "./Job/ClientPostedJob/ClientPostedJob.jsx";
+import LoadingComponent from "./LoadingComponent/LoadingComponent.jsx";
+
+
 
 export {
     Navbar,
@@ -35,6 +39,8 @@ export {
     FreelancerProfile,
     CompanyProfile,
     PostJob,
-    Job
+    Job,
+    ClientPostedJob,
+    LoadingComponent,
 }
 

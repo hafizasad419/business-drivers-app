@@ -1,6 +1,9 @@
 import { apiResponse } from "../utils/apiResponse.js";
 import { Job } from "../models/job.model.js"
+import { apiError } from "../utils/apiError.js";
 
+
+// for companies
 const postJob = async (req, res) => {
     try {
         // Extract data from the request body
@@ -53,10 +56,30 @@ const postJob = async (req, res) => {
     }
 };
 
+const jobsPosted = async (req, res) => {
+    try {
+        const { postedBy } = req.params;
+        const jobs = await Job.find({ postedBy });
+        res.status(200).json(new apiResponse(200, {
+            success: true,
+            jobs
+        }, 'Jobs fetched successfully'));
+    } catch (error) {
+        res.status(500)
+            .json(new apiError(500, {
+                success: false,
+                message: 'Error fetching jobs',
+                error: error.message
+            }));
+    }
+};
 
+
+
+// for freelancers
 const getAllJobs = async (req, res) => {
     try {
-        const jobs = await Job.find();
+        const jobs = await Job.find()
         res.status(200).json(new apiResponse(200, {
             success: true,
             jobs
@@ -70,4 +93,4 @@ const getAllJobs = async (req, res) => {
     }
 };
 
-export { postJob, getAllJobs };
+export { postJob, getAllJobs, jobsPosted };
