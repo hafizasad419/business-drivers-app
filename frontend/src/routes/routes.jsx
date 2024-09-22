@@ -12,7 +12,7 @@ export const router = createBrowserRouter(
     createRoutesFromElements(
         <>
             {/* Normal Routes with ErrorBoundary */}
-            <Route element={
+            <Route path="/" element={
                 <ErrorBoundary>
                     <Layout />
                 </ErrorBoundary>
