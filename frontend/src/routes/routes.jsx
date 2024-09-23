@@ -1,6 +1,6 @@
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom"
-import { Layout, Home } from '../Components'
-import { LoginPage, SignupPage, FreelancerDashboard, JobsPage, FreelancerDashboardDefault, NotFound, ErrorBoundary, CompanyDashboard, FreelancerProfilePage, CompanyProfilePage, CompanyDashboardDefault, PostJobPage, JobsPosted} from '../Pages'
+import { Layout, Home, ContactUs } from '../Components'
+import { LoginPage, SignupPage, FreelancerDashboard, JobsPage, FreelancerDashboardDefault, NotFound, ErrorBoundary, CompanyDashboard, FreelancerProfilePage, CompanyProfilePage, CompanyDashboardDefault, PostJobPage, JobsPosted, BlogPage } from '../Pages'
 import { ProtectedRoute } from '../Components'
 
 
@@ -18,8 +18,10 @@ export const router = createBrowserRouter(
                 </ErrorBoundary>
             } errorElement={<ErrorBoundary />}>
                 <Route index element={<Home />} />
-                <Route path="login" element={<LoginPage />} />
-                <Route path="signup" element={<SignupPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/blogs" element={<BlogPage />} />
+                <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/*" element={<NotFound />} />
             </Route>
 
@@ -49,8 +51,8 @@ export const router = createBrowserRouter(
                 {/* Nested Routes under CompanyDashboard */}
                 <Route path="" element={<CompanyDashboardDefault />} />
                 <Route path="/company-dashboard/profile" element={<CompanyProfilePage />} />
-                 <Route path="/company-dashboard/post-job" element={<PostJobPage />} />
-          <Route path="/company-dashboard/jobs-posted" element={<JobsPosted />} /> Default dashboard content
+                <Route path="/company-dashboard/post-job" element={<PostJobPage />} />
+                <Route path="/company-dashboard/jobs-posted" element={<JobsPosted />} /> Default dashboard content
 
             </Route>
 

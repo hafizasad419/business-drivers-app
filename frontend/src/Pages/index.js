@@ -11,6 +11,7 @@ import CompanyDashboardDefault from "./CompanyDashboardDefault/CompanyDashboardD
 import CompanyProfilePage from "./CompanyProfilePage/CompanyProfilePage.jsx";
 import PostJobPage from "./PostJobPage/PostJobPage.jsx";
 import JobsPosted from "./JobsPosted/JobsPosted.jsx";
+import BlogPage from "./BlogPage/BlogPage.jsx";
 
 
 export {
@@ -26,5 +27,6 @@ export {
     CompanyDashboardDefault,
     CompanyProfilePage,
     PostJobPage,
-    JobsPosted
+    JobsPosted,
+    BlogPage
 }

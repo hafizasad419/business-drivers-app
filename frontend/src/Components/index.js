@@ -18,6 +18,8 @@ import PostJob from "./PostJob/PostJob.jsx";
 import Job from "./Job/Job.jsx";
 import ClientPostedJob from "./Job/ClientPostedJob/ClientPostedJob.jsx";
 import LoadingComponent from "./LoadingComponent/LoadingComponent.jsx";
+import Blog from "./Blog/Blog.jsx";
+import ContactUs from "./ContactUs/ContactUs.jsx";
 
 
 
@@ -42,5 +44,7 @@ export {
     Job,
     ClientPostedJob,
     LoadingComponent,
+    Blog,
+    ContactUs,
 }
 
